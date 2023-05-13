@@ -9,4 +9,5 @@ public class Player
     public static int FrameHeight = 77;
     internal static Point CurrentFrame = new(0, 0);
     public static Point SpriteSize = new(8, 4);
+    public static Vector2 Position = Vector2.Zero;
 }

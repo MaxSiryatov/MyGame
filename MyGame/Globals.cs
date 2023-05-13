@@ -9,5 +9,4 @@ public class Globals
     public static ContentManager Content { get; set; }
     public static SpriteBatch SpriteBatch { get; set; }
     public static GameWindow Window { get; set; }
-    public static Point WindowSize { get; set; }
 }

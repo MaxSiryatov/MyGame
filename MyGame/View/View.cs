@@ -9,20 +9,22 @@ public static class View
     public static Texture2D Tile1Texture;
     public static Texture2D Tile2Texture;
     public static Texture2D Tile3Texture;
+    public static Texture2D PigTexture;
     public static void LoadContent()
     {
         PlayerTexture = Globals.Content.Load<Texture2D>("CowBoy");
         Tile1Texture = Globals.Content.Load<Texture2D>("Tile1");
         Tile2Texture = Globals.Content.Load<Texture2D>("Tile2");
         Tile3Texture = Globals.Content.Load<Texture2D>("Tile3");
+        PigTexture = Globals.Content.Load<Texture2D>("PigModel");
     }
-    public static void DrawPlayer()
+    public static void DrawUnit(Texture2D texture, Vector2 position, Point currentFrame, int frameWidth, int frameHeight)
     {
         Globals.SpriteBatch.Begin();
-        Globals.SpriteBatch.Draw(PlayerTexture, Control.PlayerPosition,
-            new Rectangle(Player.CurrentFrame.X * Player.FrameWidth,
-                Player.CurrentFrame.Y * Player.FrameHeight,
-                Player.FrameWidth, Player.FrameHeight),
+        Globals.SpriteBatch.Draw(texture, position,
+            new Rectangle(currentFrame.X * frameWidth,
+                currentFrame.Y * frameHeight,
+                frameWidth, frameHeight),
             Color.White, 0, Vector2.Zero,
             1, SpriteEffects.None, 0);
         Globals.SpriteBatch.End();

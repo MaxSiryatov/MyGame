@@ -45,6 +45,7 @@ public class Game1 : Game
             Exit();
         
         Control.MovePlayer(keyboardState, gameTime);
+        Control.MovePig(gameTime);
 
         base.Update(gameTime);
     }
@@ -53,7 +54,8 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
         View.DrawMap();
-        View.DrawPlayer();
+        View.DrawUnit(View.PlayerTexture, Player.Position, Player.CurrentFrame, Player.FrameWidth, Player.FrameHeight);
+        View.DrawUnit(View.PigTexture, Pig.Position, Pig.CurrentFrame, Pig.FrameWidth, Pig.FrameHeight);
         base.Draw(gameTime);
     }
 }

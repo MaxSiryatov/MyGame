@@ -1,6 +1,6 @@
 ﻿namespace MyGame;
 
-internal enum Direction
+public enum Direction
 {
     Left,
     Right,
