@@ -7,7 +7,8 @@ namespace MyGame;
 public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
-    public SpriteBatch SpriteBatch;
+    private SpriteBatch _spriteBatch;
+    private Map _map;
 
     public Game1()
     {
@@ -19,15 +20,21 @@ public class Game1 : Game
     protected override void Initialize()
     {
         Globals.Content = Content;
-        Globals.SpriteBatch = SpriteBatch;
+        Tiles.Content = Content;
+        Globals.SpriteBatch = _spriteBatch;
         Globals.Window = Window;
+
+        _map = new Map();
+        
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
-        SpriteBatch = new SpriteBatch(GraphicsDevice);
-        Model.LoadContent();
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        Globals.SpriteBatch = _spriteBatch;
+        View.LoadContent();
+        _map.Generate(Map.MapGrid, 32);
     }
 
     protected override void Update(GameTime gameTime)
@@ -36,7 +43,7 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
             keyboardState.IsKeyDown(Keys.Escape))
             Exit();
-
+        
         Control.MovePlayer(keyboardState, gameTime);
 
         base.Update(gameTime);
@@ -45,9 +52,8 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-        SpriteBatch.Begin();
-        View.Draw(SpriteBatch);
-        SpriteBatch.End();
+        View.DrawMap();
+        View.DrawPlayer();
         base.Draw(gameTime);
     }
 }

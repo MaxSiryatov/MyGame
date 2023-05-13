@@ -4,10 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MyGame;
 
-public class Globals
+public class Tiles
 {
+    public static Rectangle Rectangle { get; protected set; }
+
     public static ContentManager Content { get; set; }
-    public static SpriteBatch SpriteBatch { get; set; }
-    public static GameWindow Window { get; set; }
-    public static Point WindowSize { get; set; }
 }
