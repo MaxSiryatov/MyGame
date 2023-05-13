@@ -6,16 +6,16 @@ namespace MyGame;
 public static class View
 {
     public static Texture2D PlayerTexture;
-    public static Texture2D Tile1Texture;
-    public static Texture2D Tile2Texture;
-    public static Texture2D Tile3Texture;
+    private static Texture2D _tile1Texture;
+    private static Texture2D _tile2Texture;
+    private static Texture2D _tile3Texture;
     public static Texture2D PigTexture;
     public static void LoadContent()
     {
         PlayerTexture = Globals.Content.Load<Texture2D>("CowBoy");
-        Tile1Texture = Globals.Content.Load<Texture2D>("Tile1");
-        Tile2Texture = Globals.Content.Load<Texture2D>("Tile2");
-        Tile3Texture = Globals.Content.Load<Texture2D>("Tile3");
+        _tile1Texture = Globals.Content.Load<Texture2D>("Tile1");
+        _tile2Texture = Globals.Content.Load<Texture2D>("Tile2");
+        _tile3Texture = Globals.Content.Load<Texture2D>("Tile3");
         PigTexture = Globals.Content.Load<Texture2D>("PigModel");
     }
     public static void DrawUnit(Texture2D texture, Vector2 position, Point currentFrame, int frameWidth, int frameHeight)
@@ -38,20 +38,20 @@ public static class View
         }
     }
 
-    public static void DrawTile(int tileNumber, Rectangle rectangle)
+    private static void DrawTile(int tileNumber, Rectangle rectangle)
     {
         Globals.SpriteBatch.Begin();
         Globals.SpriteBatch.Draw(ChooseTileTexture(tileNumber), rectangle, Color.White);
         Globals.SpriteBatch.End();
     }
 
-    public static Texture2D ChooseTileTexture(int tileNumber)
+    private static Texture2D ChooseTileTexture(int tileNumber)
     {
         return tileNumber switch
         {
-            1 => Tile1Texture,
-            2 => Tile2Texture,
-            3 => Tile3Texture,
+            1 => _tile1Texture,
+            2 => _tile2Texture,
+            3 => _tile3Texture,
             _ => null
         };
     }

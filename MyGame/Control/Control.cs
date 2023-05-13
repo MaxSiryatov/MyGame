@@ -6,13 +6,13 @@ namespace MyGame;
 
 public class Control
 {
-    public static float Speed = 5f;
-    public static int CurrentTime = 0;
-    public static int Period = 50;
-    public static Random Random = new Random(); 
-    public static int CurrentTimer;
-    public static int Timer;
-    public static Direction CurrentDirection;
+    private static readonly float speed = 5f;
+    private static int _currentTime = 0;
+    private static readonly int _period = 50;
+    private static readonly Random _random = new Random();
+    private static int _currentTimer;
+    private static int _timer;
+    private static Direction _currentDirection;
 
     public static void MovePlayer(KeyboardState keyboardState, GameTime gameTime)
     {
@@ -29,56 +29,56 @@ public class Control
 
     public static void MovePig(GameTime gameTime)
     {
-        if (CurrentTimer < Timer)
+        if (_currentTimer < _timer)
         {
-            MovePigInDirection(CurrentDirection, gameTime);
+            MovePigInDirection(_currentDirection, gameTime);
             if (PigNotInBounds())
-                ReverseDirection(CurrentDirection);
-            CurrentTimer++;
+                ReverseDirection(_currentDirection);
+            _currentTimer++;
             return;
         }
 
-        var random = Random.Next(3);
+        var random = _random.Next(3);
         switch (random)
         {
             case 0:
-                CurrentDirection = Direction.Down;
-                Timer = Random.Next(30, 500);
-                CurrentTimer = 0;
+                _currentDirection = Direction.Down;
+                _timer = _random.Next(30, 500);
+                _currentTimer = 0;
                 break;
             case 1:
-                CurrentDirection = Direction.Left;
-                Timer = Random.Next(30, 500);
-                CurrentTimer = 0;
+                _currentDirection = Direction.Left;
+                _timer = _random.Next(30, 500);
+                _currentTimer = 0;
                 break;
             case 2:
-                CurrentDirection = Direction.Right;
-                Timer = Random.Next(30, 500);
-                CurrentTimer = 0;
+                _currentDirection = Direction.Right;
+                _timer = _random.Next(30, 500);
+                _currentTimer = 0;
                 break;
             case 3:
-                CurrentDirection = Direction.Up;
-                Timer = Random.Next(30, 500);
-                CurrentTimer = 0;
+                _currentDirection = Direction.Up;
+                _timer = _random.Next(30, 500);
+                _currentTimer = 0;
                 break;
         }
     }
 
-    public static bool PigNotInBounds()
+    private static bool PigNotInBounds()
     {
         return Pig.Position.X < 0 || Pig.Position.X > Globals.Window.ClientBounds.Width - 70 || Pig.Position.Y < 0 ||
                Pig.Position.Y > Globals.Window.ClientBounds.Height - 70;
     }
 
-    public static void ReverseDirection(Direction currentDirection)
+    private static void ReverseDirection(Direction currentDirection)
     {
-        CurrentDirection = currentDirection switch
+        _currentDirection = currentDirection switch
         {
             Direction.Down => Direction.Up,
             Direction.Up => Direction.Down,
             Direction.Left => Direction.Right,
             Direction.Right => Direction.Left,
-            _ => CurrentDirection
+            _ => _currentDirection
         };
     }
 
@@ -88,46 +88,46 @@ public class Control
         {
             case Direction.Left:
                 Player.CurrentFrame.Y = 1;
-                CurrentTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (CurrentTime > Period)
+                _currentTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (_currentTime > _period)
                 {
-                    CurrentTime -= Period;
+                    _currentTime -= _period;
                     ++Player.CurrentFrame.X;
                     if (Player.CurrentFrame.X >= Player.SpriteSize.X) Player.CurrentFrame.X = 0;
-                    Player.Position.X -= Speed;
+                    Player.Position.X -= speed;
                 }
                 break;
             case Direction.Right:
                 Player.CurrentFrame.Y = 2;
-                CurrentTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (CurrentTime > Period)
+                _currentTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (_currentTime > _period)
                 {
-                    CurrentTime -= Period;
+                    _currentTime -= _period;
                     ++Player.CurrentFrame.X;
                     if (Player.CurrentFrame.X >= Player.SpriteSize.X) Player.CurrentFrame.X = 0;
-                    Player.Position.X += Speed;
+                    Player.Position.X += speed;
                 }
                 break;
             case Direction.Up:
                 Player.CurrentFrame.Y = 3;
-                CurrentTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (CurrentTime > Period)
+                _currentTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (_currentTime > _period)
                 {
-                    CurrentTime -= Period;
+                    _currentTime -= _period;
                     ++Player.CurrentFrame.X;
                     if (Player.CurrentFrame.X >= Player.SpriteSize.X) Player.CurrentFrame.X = 0;
-                    Player.Position.Y -= Speed;
+                    Player.Position.Y -= speed;
                 }
                 break;
             case Direction.Down:
                 Player.CurrentFrame.Y = 0;
-                CurrentTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (CurrentTime > Period)
+                _currentTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (_currentTime > _period)
                 {
-                    CurrentTime -= Period;
+                    _currentTime -= _period;
                     ++Player.CurrentFrame.X;
                     if (Player.CurrentFrame.X >= Player.SpriteSize.X) Player.CurrentFrame.X = 0;
-                    Player.Position.Y += Speed;
+                    Player.Position.Y += speed;
                 }
                 break;
             case Direction.None:
@@ -143,46 +143,46 @@ public class Control
         {
             case Direction.Left:
                 Pig.CurrentFrame.Y = 1;
-                CurrentTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (CurrentTime > Period)
+                _currentTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (_currentTime > _period)
                 {
-                    CurrentTime -= Period;
+                    _currentTime -= _period;
                     ++Pig.CurrentFrame.X;
                     if (Pig.CurrentFrame.X >= Pig.SpriteSize.X) Pig.CurrentFrame.X = 0;
-                    Pig.Position.X -= Speed;
+                    Pig.Position.X -= speed;
                 }
                 break;
             case Direction.Right:
                 Pig.CurrentFrame.Y = 2;
-                CurrentTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (CurrentTime > Period)
+                _currentTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (_currentTime > _period)
                 {
-                    CurrentTime -= Period;
+                    _currentTime -= _period;
                     ++Pig.CurrentFrame.X;
                     if (Pig.CurrentFrame.X >= Pig.SpriteSize.X) Pig.CurrentFrame.X = 0;
-                    Pig.Position.X += Speed;
+                    Pig.Position.X += speed;
                 }
                 break;
             case Direction.Up:
                 Pig.CurrentFrame.Y = 3;
-                CurrentTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (CurrentTime > Period)
+                _currentTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (_currentTime > _period)
                 {
-                    CurrentTime -= Period;
+                    _currentTime -= _period;
                     ++Pig.CurrentFrame.X;
                     if (Pig.CurrentFrame.X >= Pig.SpriteSize.X) Pig.CurrentFrame.X = 0;
-                    Pig.Position.Y -= Speed;
+                    Pig.Position.Y -= speed;
                 }
                 break;
             case Direction.Down:
                 Pig.CurrentFrame.Y = 0;
-                CurrentTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (CurrentTime > Period)
+                _currentTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (_currentTime > _period)
                 {
-                    CurrentTime -= Period;
+                    _currentTime -= _period;
                     ++Pig.CurrentFrame.X;
                     if (Pig.CurrentFrame.X >= Pig.SpriteSize.X) Pig.CurrentFrame.X = 0;
-                    Pig.Position.Y += Speed;
+                    Pig.Position.Y += speed;
                 }
                 break;
             case Direction.None:
