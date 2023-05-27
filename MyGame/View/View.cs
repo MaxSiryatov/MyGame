@@ -42,7 +42,6 @@ public static class View
         Font = Globals.Content.Load<SpriteFont>("File");
         PlayTexture = Globals.Content.Load<Texture2D>("Play");
         QuitTexture = Globals.Content.Load<Texture2D>("Quit");
-
     }
     public static void DrawUnit(Texture2D texture, Vector2 position, Point currentFrame, int frameWidth, int frameHeight)
     {
@@ -81,7 +80,7 @@ public static class View
     public static void DrawScore()
     {
         Globals.SpriteBatch.Begin();
-        Globals.SpriteBatch.DrawString(Font, "Score" + Globals.Score, new Vector2(20, 10), Color.Yellow);
+        Globals.SpriteBatch.DrawString(Font, $"Score:{Globals.Score}", new Vector2(20, 10), Color.Yellow);
         Globals.SpriteBatch.End();
     }
 

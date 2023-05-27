@@ -8,7 +8,7 @@ namespace MyGame;
 public class Control
 {
     private static readonly float playerSpeed = 6f;
-    private static readonly float pigSpeed = 4f;
+    private static readonly float pigSpeed = 3f;
     private static int boundsMoveCount = 0;
     private static int _currentTime = 0;
     private static readonly int _period = 50;
@@ -16,6 +16,7 @@ public class Control
     private static int _currentTimer;
     private static int _timer;
     private static Direction _currentDirection;
+    private static bool switchMovementLogic = false;
 
     public static void MovePlayer(KeyboardState keyboardState, GameTime gameTime)
     {
@@ -36,7 +37,35 @@ public class Control
 
     public static void MovePig(GameTime gameTime)
     {
-        if (_currentTimer < _timer)
+        if (switchMovementLogic)
+        {
+            if (Player.Rectangle.X - Pig.Rectangle.X > 3)
+            {
+                MovePigInDirection(Direction.Right, gameTime);
+                CheckForCollision(Pig.Rectangle);
+                return;
+            }
+            if (Pig.Rectangle.X - Player.Rectangle.X > 3)
+            {
+                MovePigInDirection(Direction.Left, gameTime);
+                CheckForCollision(Pig.Rectangle);
+                return;
+            }
+
+            if (Pig.Rectangle.Y - Player.Rectangle.Y > 3)
+            {
+                MovePigInDirection(Direction.Up, gameTime);
+                CheckForCollision(Pig.Rectangle);
+                return;
+            }
+            if (Player.Rectangle.Y - Pig.Rectangle.Y > 3)
+            {
+                MovePigInDirection(Direction.Down, gameTime);
+                CheckForCollision(Pig.Rectangle);
+            }
+        }
+        
+        else if (_currentTimer < _timer)
         {
             if (UnitNotInBounds(Pig.Rectangle) || PigCollisionPlayer() || boundsMoveCount > 0 || CheckForCollision(Pig.Rectangle)) 
             {
@@ -57,9 +86,7 @@ public class Control
                 {
                     if (PigCollisionPlayer())
                     {
-                        _currentDirection = GetCollisionDirection(Pig.Position.X, Pig.Position.Y, Player.Position.X, Player.Position.Y);
-                        MovePigInDirection(_currentDirection, gameTime);
-                        _currentTimer++; 
+                        switchMovementLogic = true;
                     }
 
                     else
@@ -92,8 +119,9 @@ public class Control
         {
             if (rectangle.Intersects(tile.CollisionRectangle) && tile.TileNumber == 6)
             {
-                Pig.FrameWidth = 0;
+                Pig.Position = new Vector2(Globals.Window.ClientBounds.Width / 2, Globals.Window.ClientBounds.Height / 2);
                 Globals.Score++;
+                switchMovementLogic = false;
             }
             if (rectangle.Intersects(tile.CollisionRectangle) && collisionTilesNums.Contains(tile.TileNumber))
                 return true;
