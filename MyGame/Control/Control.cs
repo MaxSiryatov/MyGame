@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -37,7 +38,7 @@ public class Control
     {
         if (_currentTimer < _timer)
         {
-            if (UnitNotInBounds(Pig.Rectangle) || PigCollisionPlayer() || boundsMoveCount > 0)
+            if (UnitNotInBounds(Pig.Rectangle) || PigCollisionPlayer() || boundsMoveCount > 0 || CheckForCollision(Pig.Rectangle)) 
             {
                 if (boundsMoveCount > 0)
                     if (boundsMoveCount == 4)
@@ -84,6 +85,23 @@ public class Control
         }
     }
 
+    private static bool CheckForCollision(Rectangle rectangle)
+    {
+        var collisionTilesNums = new List<int> { 3, 4, 5, 7, 8, 9, 11 };
+        foreach (var tile in Map.CollisionTiles)
+        {
+            if (rectangle.Intersects(tile.CollisionRectangle) && tile.TileNumber == 6)
+            {
+                Pig.FrameWidth = 0;
+                Globals.Score++;
+            }
+            if (rectangle.Intersects(tile.CollisionRectangle) && collisionTilesNums.Contains(tile.TileNumber))
+                return true;
+        }
+
+        return false;
+    }
+
     private static void GetRandomDirection()
     {
         var random = _random.Next(3);
@@ -114,13 +132,13 @@ public class Control
 
     private static Direction GetCollisionDirection(float position1X, float position1Y, float position2X, float position2Y)
     {
-        if ((int)position2X - (int)position1X >= 64 && (int)position2X - (int)position1X <= 150)
+        if ((int)position2X - (int)position1X >= 0 && (int)position2X - (int)position1X <= 150)
             return Direction.Left;
-        if ((int)position1X - (int)position2X >= 64 && (int)position1X - (int)position2X <= 150)
+        if ((int)position1X - (int)position2X >= 0 && (int)position1X - (int)position2X <= 150)
             return Direction.Right;
-        if ((int)position1Y - (int)position2Y >= 64 && (int)position2Y - (int)position1Y <= 150)
+        if ((int)position1Y - (int)position2Y >= 0 && (int)position2Y - (int)position1Y <= 150)
             return Direction.Down;
-        if ((int)position2Y - (int)position1Y >= 64 && (int)position1Y - (int)position2Y <= 150)
+        if ((int)position2Y - (int)position1Y >= 0 && (int)position1Y - (int)position2Y <= 150)
             return Direction.Up;
         return _currentDirection;
     }
@@ -135,8 +153,8 @@ public class Control
 
     private static bool UnitNotInBounds(Rectangle rectangle)
     {
-        return rectangle.X <= 0 || rectangle.X >= Globals.Window.ClientBounds.Width - 70 || rectangle.Y <= 0 ||
-               rectangle.Y >= Globals.Window.ClientBounds.Height - 70;
+        return rectangle.X <= 10 || rectangle.X >= Globals.Window.ClientBounds.Width - 90 || rectangle.Y <= 10 ||
+               rectangle.Y >= Globals.Window.ClientBounds.Height - 90;
     }
 
     private static bool PigCollisionPlayer()

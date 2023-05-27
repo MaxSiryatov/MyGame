@@ -10,7 +10,7 @@ public class Player
     internal static Point CurrentFrame = new(0, 0);
     public static Point SpriteSize = new(8, 4);
     public static Vector2 Position = Vector2.Zero;
-    public static Rectangle Rectangle;
+    public static Rectangle Rectangle = new Rectangle((int)Position.X, (int)Position.Y, FrameWidth, FrameHeight);
     
     public static void Update()
     {

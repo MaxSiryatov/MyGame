@@ -80,6 +80,7 @@ public class Game1 : Game
         View.DrawMap();
         View.DrawUnit(View.PlayerTexture, Player.Position, Player.CurrentFrame, Player.FrameWidth, Player.FrameHeight);
         View.DrawUnit(View.PigTexture, Pig.Position, Pig.CurrentFrame, Pig.FrameWidth, Pig.FrameHeight);
+        View.DrawScore();
         if (Globals.Paused)
             View.DrawButton();
         base.Draw(gameTime);

@@ -5,7 +5,7 @@ namespace MyGame;
 
 public class QuitButton
 {
-    public static Vector2 Position;
+    public static Vector2 Position = new Vector2(120, 500);
     public static Rectangle Rectangle;
     public static Color Color = new Color(255, 255, 255, 255);
     public static bool down;

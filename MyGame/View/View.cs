@@ -18,10 +18,10 @@ public static class View
     private static Texture2D _tile10Texture;
     private static Texture2D _tile11Texture;
     public static Texture2D PigTexture;
-    private static Texture2D _pausedTexture;
-    private static Rectangle _pausedRectangle;
+    public static Texture2D PausedTexture;
     public static Texture2D PlayTexture;
     public static Texture2D QuitTexture;
+    public static SpriteFont Font;
 
     public static void LoadContent()
     {
@@ -38,20 +38,11 @@ public static class View
         _tile10Texture = Globals.Content.Load<Texture2D>("Tile10");
         _tile11Texture = Globals.Content.Load<Texture2D>("Tile11");
         PigTexture = Globals.Content.Load<Texture2D>("PigModel");
-        _pausedTexture = Globals.Content.Load<Texture2D>("Pause");
-        
-        Pig.Rectangle = new Rectangle((int)Pig.Position.X,
-            (int)Pig.Position.Y,
-            Pig.FrameWidth, Pig.FrameHeight);
-        Player.Rectangle = new Rectangle((int)Player.Position.X,
-            (int)Player.Position.Y,
-            Player.FrameWidth, Player.FrameHeight);
-
-        _pausedRectangle = new Rectangle(0, 0, _pausedTexture.Width, _pausedTexture.Height);
+        PausedTexture = Globals.Content.Load<Texture2D>("Pause");
+        Font = Globals.Content.Load<SpriteFont>("File");
         PlayTexture = Globals.Content.Load<Texture2D>("Play");
-        PlayButton.Position = new Vector2(1000, 500);
         QuitTexture = Globals.Content.Load<Texture2D>("Quit");
-        QuitButton.Position = new Vector2(120, 500);
+
     }
     public static void DrawUnit(Texture2D texture, Vector2 position, Point currentFrame, int frameWidth, int frameHeight)
     {
@@ -74,7 +65,7 @@ public static class View
     public static void DrawButton()
     {
         Globals.SpriteBatch.Begin(); ;
-        Globals.SpriteBatch.Draw(_pausedTexture, _pausedRectangle, Color.White);
+        Globals.SpriteBatch.Draw(PausedTexture, Pause.PausedRectangle, Color.White);
         Globals.SpriteBatch.Draw(PlayTexture, PlayButton.Rectangle, PlayButton.Color);
         Globals.SpriteBatch.Draw(QuitTexture, QuitButton.Rectangle, QuitButton.Color);
         Globals.SpriteBatch.End();
@@ -84,6 +75,13 @@ public static class View
     {
         Globals.SpriteBatch.Begin();
         Globals.SpriteBatch.Draw(ChooseTileTexture(tileNumber), rectangle, Color.White);
+        Globals.SpriteBatch.End();
+    }
+
+    public static void DrawScore()
+    {
+        Globals.SpriteBatch.Begin();
+        Globals.SpriteBatch.DrawString(Font, "Score" + Globals.Score, new Vector2(20, 10), Color.Yellow);
         Globals.SpriteBatch.End();
     }
 
