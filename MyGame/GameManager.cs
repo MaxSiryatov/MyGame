@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MyGame;
 
-public class Game1 : Game
+public class GameManager : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -12,7 +12,7 @@ public class Game1 : Game
     public static PlayButton BtnPlay;
     public static QuitButton BtnQuit;
 
-    public Game1()
+    public GameManager()
     {
         _graphics = new GraphicsDeviceManager(this);
         _graphics.PreferredBackBufferHeight = 720;
